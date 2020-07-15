@@ -9,8 +9,8 @@
                     <div class="left-content-total">
                         <div class="left-title"><p>运营数据</p></div>
                         <div class="total-bar">
-                            <div class="left-content-total-item" v-for="item in leftTopBarData">
-                                <p class="yellow">{{item.count}}</p>
+                            <div class="left-content-total-item" v-for="(item,index) in leftTopBarData">
+                                <p :class="index%2 === 0 ?'yellow':'red'">{{item.count}}</p>
                                 <p>{{item.label}}</p>
                             </div>
                         </div>
@@ -41,31 +41,30 @@
                             <div class="common-table">
                                 <table cellspacing="0">
                                     <tr>
-                                        <th width="424px">标题</th>
-                                        <th width="138px">发布时间</th>
+                                        <th width="404px">标题</th>
+                                        <th width="162px">发布时间</th>
                                         <th width="141px">阅读数</th>
                                         <th width="141px">在看数</th>
                                         <th width="142px">点赞数</th>
                                         <th width="142px">评论数</th>
-                                        <th width="121px">是否原创</th>
+                                        <th width="117px">是否原创</th>
                                     </tr>
                                 </table>
-                                <div class="turns-table-body" style="height: 200px">
+                                <div class="turns-table-body" style="height: 373px">
                                     <table cellspacing="0">
                                         <tr v-for="(item, index) in leftTableData.data.concat(leftTableData.data)">
-                                            <td width="424px"  @mouseover="showLeftTablePop($event,item)" @mouseout="hideLeftTablePop">
-                                                <div style="width:30px;display: inline-block">
+                                            <td width="404px"  @mouseover="showLeftTablePop($event,item)" @mouseout="hideLeftTablePop">
                                                     <img v-if="item.hasFireIcon" class="fire" src="./assets/fire@2x.png">
                                                     <img v-else-if="item.hasLineIcon " class="fire" src="./assets/line-graph@2x.png">
-                                                </div>
-                                                {{item.title}}
+                                                    <img v-else class="fire" style="visibility: hidden">
+                                                <p>{{item.title}}</p>
                                             </td>
-                                            <td width="138px">{{item.publishTime}}</td>
+                                            <td width="162px">{{item.publishTime}}</td>
                                             <td width="141px">{{item.readNum}}</td>
                                             <td width="141px">{{item.lookNum}}</td>
                                             <td width="142px">{{item.likeNum}}</td>
                                             <td width="142px">{{item.discNum}}</td>
-                                            <td width="121px">{{item.isSelf}}</td>
+                                            <td width="117px">{{item.isSelf}}</td>
                                         </tr>
                                     </table>
                                 </div>
@@ -74,95 +73,110 @@
                     </div>
                 </div>
             </div>
-            <div class="center-block">
-                <img class="earth-bg" src="./assets/earth.png">
-                <p class="map-title">公众号分布图</p>
-                <p class="count-total">
-                    <span>公众号总数量（万）：<i>1,100,000,000</i></span>
-                    <span>在看数（人）：<i>1,100,000,000</i></span>
-                </p>
-                <Map @freshData="freshData"></Map>
-                <div class="map-bottom">
-                    <p>
-                        全省共<strong>15</strong>个公众号，近30天增加<strong>15</strong>个公众号，
-                        遍布<strong>10</strong>个市 共<strong>528</strong>，<strong>588</strong>，<strong>589</strong>，<strong>69</strong>
-                        篇文章日平均阅读量<strong>10</strong>万次，日平均发文数<strong>10</strong>万篇
-                    </p>
-
-                </div>
-            </div>
             <div class="right-block">
-                <div class="top-bar">
-                    <div class="top-tab selected">
-                        <p>日榜单</p>
-                        <p>2020/06/01</p>
-                    </div>
-                    <div class="top-tab">
-                        <p>周榜单</p>
-                        <p>20200601-20200604</p>
-                    </div>
-                    <div class="top-tab">
-                        <p>月榜单</p>
-                        <p>20200601-20200630</p>
+                <div class="top-content">
+                    <Map @freshData="freshData"></Map>
+                    <div class="map-info">
+                        <p class="map-title">公众号分布图</p>
+                        <div class="map-box">
+                            <div>
+                                <p>
+                                    <span>公众号总数量（万）</span>
+                                    <span class="yellow">1,000,000,000</span>
+                                </p>
+                                <p>
+                                    <span>在看数（人）</span>
+                                    <span class="red">1,000,000,000</span>
+                                </p>
+                            </div>
+                            <div>
+                                <p>
+                                    全省共<i>15</i>个公众号<br>
+                                    近30天增加<i>15</i>个公众号<br>
+                                    遍布<i>10</i>个市<br>
+                                    共<i>528</i>，<i>588</i>，<i>69</i>篇文章<br>
+                                    日平均阅读量<i>10</i>万次<br>
+                                    日平均发文数<i>10</i>万篇
+                                </p>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
-                <div class="right-content">
-                    <div class="right-table common-table">
-                        <table cellspacing="0">
-                            <tr>
-                                <th width="179px">公众号</th>
-                                <th width="142px">指数</th>
-                                <th width="97px">粉丝数</th>
-                                <th width="97px">文章数</th>
-                                <th width="97px">阅读数</th>
-                                <th width="98px">在看数</th>
-                            </tr>
-                        </table>
-                        <div class="turns-table-body" style="height: 560px">
+                <div class="bottom-content">
+                    <div class="top-bar">
+                        <div class="top-tab selected">
+                            <p>日榜单</p>
+                            <p>2020/06/01</p>
+                        </div>
+                        <div class="top-tab">
+                            <p>周榜单</p>
+                            <p>20200601-20200604</p>
+                        </div>
+                        <div class="top-tab">
+                            <p>月榜单</p>
+                            <p>20200601-20200630</p>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <div class="right-table common-table">
                             <table cellspacing="0">
-                                <tr :class="item.isSelected ? 'selected': ''" v-for="(item, index) in rightTableData.concat(rightTableData)"
-                                     @click="selectPublicNum($event, index)">
-                                    <td>
-                                        <div class="public-num">
-                                            <span :class="'color'+index % rightTableData.length">{{index > rightTableData.length - 1 ? index - (rightTableData.length - 1):index + 1}}</span>
-                                            <img>
-                                            <p>
-                                                <span>{{item.school}}</span>
-                                                <span>{{item.publicNum}}</span>
-                                            </p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="index">
-                                            <span>{{item.kpi[0]}}</span>
-                                            <span>{{item.kpi[1]}}</span>
-                                        </p>
-                                    </td>
-                                    <td>{{item.fansNum}}</td>
-                                    <td>{{item.articleNum}}</td>
-                                    <td>{{item.readNum}}</td>
-                                    <td>{{item.lookingNum}}</td>
+                                <tr>
+                                    <th width="300px">公众号</th>
+                                    <th width="200px">指数</th>
+                                    <th width="200px">粉丝数</th>
+                                    <th width="200px">文章数</th>
+                                    <th width="200px">阅读数</th>
+                                    <th width="200px">在看数</th>
                                 </tr>
                             </table>
-                        </div>
-                    </div>
-                    <div class="right-chart">
-                        <div class="content-box">
-                            <div class="box-title">
-                                <img src="./assets/chart-title.png">
-                                <span>文章数和评论数趋势图</span>
+                            <div class="turns-table-body" style="height: 800px">
+                                <table cellspacing="0">
+                                    <tr :class="item.isSelected ? 'selected': ''" v-for="(item, index) in rightTableData.concat(rightTableData)"
+                                        @click="selectPublicNum($event, index)">
+                                        <td width="300px">
+                                            <div class="public-num">
+                                                <span :class="'color'+index % rightTableData.length">{{index > rightTableData.length - 1 ? index - (rightTableData.length - 1):index + 1}}</span>
+                                                <img>
+                                                <p>
+                                                    <span>{{item.school}}</span>
+                                                    <span>{{item.publicNum}}</span>
+                                                </p>
+                                            </div>
+                                        </td>
+                                        <td width="200px">
+                                            <p class="index">
+                                                <span>{{item.kpi[0]}}</span>
+                                                <span>↑{{item.kpi[1]}}</span>
+                                            </p>
+                                        </td>
+                                        <td width="200px">{{item.fansNum}}</td>
+                                        <td width="200px">{{item.articleNum}}</td>
+                                        <td width="200px">{{item.readNum}}</td>
+                                        <td width="200px">{{item.lookingNum}}</td>
+                                    </tr>
+                                </table>
                             </div>
-                            <div id="rightTopChartLine"></div>
                         </div>
-                        <div class="content-box">
-                            <div class="box-title">
-                                <img src="./assets/chart-title.png">
-                                <span>阅读数和点赞数趋势图</span>
+                        <div class="right-chart">
+                            <div class="content-box">
+                                <div class="box-title">
+                                    <img src="./assets/chart-title.png">
+                                    <span>文章数和评论数趋势图</span>
+                                </div>
+                                <div id="rightTopChartLine"></div>
                             </div>
-                            <div id="rightBottomChartLine"></div>
+                            <div class="content-box">
+                                <div class="box-title">
+                                    <img src="./assets/chart-title.png">
+                                    <span>阅读数和点赞数趋势图</span>
+                                </div>
+                                <div id="rightBottomChartLine"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <img class="earth-bg" src="./assets/earth.png">
             </div>
         </div>
         <div class="left-table-pop" :style="{top:leftTableData.popOffSet.top+'px',left:leftTableData.popOffSet.left+'px',display:(leftTableData.isShowPop ? 'flex':'none')}">
@@ -198,7 +212,7 @@
                       textStyle: {
                           color: '#E7E7E7',
                       },
-                      fontSize:12
+                      fontSize:24
                   },
                   splitLine: {
                       lineStyle: {
@@ -207,62 +221,62 @@
                   },
               },
               leftTopBarData:[
-                  {count:'1,000,000,000',label:'文字总数量'},
-                  {count:'1,000,000,000',label:'评论总数量'},
-                  {count:'1,000,000,000',label:'阅读总数量'},
-                  {count:'1,000,000,000',label:'在看总数量'}
+                  {count:'1,000,000,000',label:'文字总数量(篇)'},
+                  {count:'1,000,000,000',label:'评论总数量(篇)'},
+                  {count:'1,000,000,000',label:'阅读总数量(次)'},
+                  {count:'1,000,000,000',label:'在看总数量(次)'}
               ],
               leftTableData:{
                   data:[
                       {
-                          title:'1为什么学习在孩子成 长中占最高权重比？',
+                          title:'1为什么学习在孩子成长中占最高权重比？',
                           publishTime:'2020-06-21',
-                          readNum: '1,000,000,00',
-                          lookNum: '1,000,000,00',
-                          likeNum: '1,000,000,00',
-                          discNum: '1,000,000,00',
+                          readNum: '1,000,000',
+                          lookNum: '1,000,000',
+                          likeNum: '1,000,000',
+                          discNum: '1,000,000',
                           isSelf: '是',
                           tag:['福州大学','福州大学'],
                           hasFireIcon:true,
                       },
                       {
-                          title:'2为什么学习在孩子成 长中占最高权重比？',
+                          title:'2为什么学习在孩子成长中占最高权重比？',
                           publishTime:'2020-06-21',
-                          readNum: '1,000,000,00',
-                          lookNum: '1,000,000,00',
-                          likeNum: '1,000,000,00',
-                          discNum: '1,000,000,00',
+                          readNum: '1,000,000',
+                          lookNum: '1,000,000',
+                          likeNum: '1,000,000',
+                          discNum: '1,000,000',
                           isSelf: '是',
                           tag:['福州大学','福州大学'],
                           hasLineIcon:true
                       },
                       {
-                          title:'3为什么学习在孩子成 长中占最高权重比？',
+                          title:'3为什么学习在孩子成长中占最高权重比？',
                           publishTime:'2020-06-21',
-                          readNum: '1,000,000,00',
-                          lookNum: '1,000,000,00',
-                          likeNum: '1,000,000,00',
-                          discNum: '1,000,000,00',
+                          readNum: '1,000,000',
+                          lookNum: '1,000,000',
+                          likeNum: '1,000,000',
+                          discNum: '1,000,000',
                           isSelf: '是',
                           tag:['福州大学','福州大学']
                       },
                       {
-                          title:'4为什么学习在孩子成 长中占最高权重比？',
+                          title:'4为什么学习在孩子成长中占最高权重比？',
                           publishTime:'2020-06-21',
-                          readNum: '1,000,000,00',
-                          lookNum: '1,000,000,00',
-                          likeNum: '1,000,000,00',
-                          discNum: '1,000,000,00',
+                          readNum: '1,000,000',
+                          lookNum: '1,000,000',
+                          likeNum: '1,000,000',
+                          discNum: '1,000,000',
                           isSelf: '是',
                           tag:['福州大学','福州大学']
                       },
                       {
-                          title:'5为什么学习在孩子成 长中占最高权重比？',
+                          title:'5为什么学习在孩子成长中占最高权重比？',
                           publishTime:'2020-06-21',
-                          readNum: '1,000,000,00',
-                          lookNum: '1,000,000,00',
-                          likeNum: '1,000,000,00',
-                          discNum: '1,000,000,00',
+                          readNum: '1,000,000',
+                          lookNum: '1,000,000',
+                          likeNum: '1,000,000',
+                          discNum: '1,000,000',
                           isSelf: '是',
                           tag:['福州大学','福州大学']
                       },
@@ -297,13 +311,13 @@
                 {name:'评论数', data:[0, 170, 80, 130, 450, 120]},
                 ['', '2020-09', '2020-10', '2020-11', '2020-12', '2021-01'])
             this.renderLine(document.getElementById('rightTopChartLine'),
-                {name:'文章数', data:[0, 120, 112, 100, 300, 80]},
-                {name:'评论数', data:[0, 170, 80, 130, 450, 120]},
-                ['', '2020-09', '2020-10', '2020-11', '2020-12', '2021-01'])
+                {name:'文章数', data:[0, 120, 112, 100, 300]},
+                {name:'评论数', data:[0, 170, 80, 130, 450]},
+                ['', '2020-09', '2020-10', '2020-11', '2020-12'])
             this.renderLine(document.getElementById('rightBottomChartLine'),
-                {name:'阅读数', data:[0, 120, 112, 100, 300, 80]},
-                {name:'点赞数', data:[0, 170, 80, 130, 450, 120]},
-                ['', '2020-09', '2020-10', '2020-11', '2020-12', '2021-01'])
+                {name:'阅读数', data:[0, 120, 112, 100, 300]},
+                {name:'点赞数', data:[0, 170, 80, 130, 450]},
+                ['', '2020-09', '2020-10', '2020-11', '2020-12'])
             this.renderLeftBar(
                 ['2020-09', '2020-09', '2020-09', '2020-09', '2020-09', '2020-09', '2020-09', '2020-09'],
                 {
@@ -319,7 +333,7 @@
                 this.tableRoll($('.left-content-grid .turns-table-body table'),'left')
             }
             if(this.rightTableData.length > 8){
-                this.tableRoll($('.right-content .turns-table-body table'),'right')
+                this.tableRoll($('.right-block .turns-table-body table'),'right')
             }
         },
         methods: {
@@ -351,16 +365,19 @@
                     },
                     legend: {
                         type: 'plain',
-                        right: '8%',
+                        right: '6%',
                         top: '2%',
                         icon: 'circle',
+                        itemWidth: 25,
+                        itemHeight: 25,
                         textStyle: {
                             color: '#fff',
-                            fontSize:14
+                            fontSize:28
                         }
                     },
                     grid: {
                         left: '6%',
+                        right:'7%',
                         top:'20%',
                         bottom:'8%'
                     },
@@ -447,12 +464,14 @@
                 this.renderChart(document.getElementById('leftChartBar'),{
                     legend: {
                         type: 'plain',
-                        right: '8%',
+                        right: '4%',
                         top: '2%',
                         icon: 'circle',
+                        itemWidth: 25,
+                        itemHeight: 25,
                         textStyle: {
                             color: '#fff',
-                            fontSize:14
+                            fontSize:28
                         }
                     },
                     label: {
@@ -460,6 +479,7 @@
                     },
                     grid: {
                         left: '10%',
+                        right:'4%',
                         top:'14%',
                         bottom:'8%'
                     },
@@ -648,7 +668,7 @@
 
     .container {
         min-width: 3840px;
-        min-height: 926px;
+        min-height: 2160px;
         width: 100%;
         height: 100%;
         background-image: url("./assets/bg@2x.png");
@@ -659,7 +679,7 @@
 
         .head {
             width: 100%;
-            height: 105.5px;
+            height: 125px;
             background-image: url("./assets/head@2x.png");
             background-size: 100% 100%;
             background-image: -webkit-image-set(
@@ -677,21 +697,18 @@
                 -webkit-text-fill-color: transparent;
             }
         }
-
         .content {
             display: flex;
             flex-direction: row;
             width: 100%;
-            height: calc(100% - 105.5px);
-
+            height: calc(100% - 125px);
             .left-block {
-                width: 1353.5px;
+                /*width: 1489.5px;*/
                 height: 100%;
-
                 .left-content {
-                    width: calc(100% - 33px);
-                    height: calc(100% - 32.5px);
-                    float: right;
+                    width: 1384.5px;
+                    height: calc(100% - 60px);
+                    margin: 0 0 0 60px;
                     background-image: url("./assets/left-block@2x.png");
                     background-size: 100% 100%;
                     background-image: -webkit-image-set(
@@ -699,26 +716,30 @@
                                     url("./assets/left-block@2x.png") 2x);
                     display: flex;
                     flex-direction: column;
-
                     .left-content-total {
-                        width: 1249.5px;
-                        height: 25%;
+                        width: 100%;
+                        height: 16.7%;
+                        /*height: 25%;*/
                         margin: 0 auto 0 auto;
                         position: relative;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
                         .left-title{
-                            margin-top: 25px;
+                            margin-top: 3%;
+                            width: 100%;
                             >p{
-                                font-size:30px;
+                                font-size:45px;
                                 font-weight:bold;
+                                padding-left:54px;
                                 background:linear-gradient(0deg,rgba(0,174,255,1) 0%, rgba(0,228,255,1) 100%);
                                 -webkit-background-clip:text;
                                 -webkit-text-fill-color:transparent;
                             }
                         }
                         .total-bar{
-                            position: absolute;
                             bottom: 0;
-                            width: 100%;
+                            width: 1286.5px;
                             background-image: url("./assets/left-content-total-bar@2x.png");
                             background-size: 100% 100%;
                             background-image: -webkit-image-set(
@@ -726,7 +747,8 @@
                                             url("./assets/left-content-total-bar@2x.png") 2x);
                             display: flex;
                             flex-direction: row;
-                            height: 95.5px;
+                            height: 153px;
+                            margin-top: 82px;
                             .left-content-total-item {
                                 width: 25%;
                                 display: flex;
@@ -743,12 +765,12 @@
                                 }
 
                                 > p:first-child {
-                                    font-size: 25px;
+                                    font-size: 35px;
                                     font-weight: bold;
                                 }
 
                                 > p:last-child {
-                                    font-size: 20px;
+                                    font-size: 30px;
                                     color: #E7E7E7;
                                 }
                             }
@@ -756,13 +778,14 @@
 
                     }
                     .left-content-chart {
-                        width: 1249.5px;
-                        height: 40%; //314px;
-                        margin: 0 auto;
+                        width: 100%;
+                        height: 57.2%;
                         display: flex;
+                        flex-direction: column;
+                        padding: 0 50px;
                         .chart-line-block {
-                            width: 48%;
-                            height: 100%;
+                            width: 100%;
+                            height: 50%;
                             #leftChartLine {
                                 width: 100%;
                                 height: 90%;
@@ -771,8 +794,8 @@
                         }
 
                         .chart-bar-block {
-                            width: 52%;
-                            height: 100%;
+                            width: 100%;
+                            height: 50%;
                             #leftChartBar {
                                 width: 100%;
                                 height: 90%;
@@ -782,12 +805,12 @@
                     }
                     .left-content-grid{
                         width: 1249.5px;
-                        height: 35%;//calc(100% - 409px);
+                        height: 26.1%;//calc(100% - 409px);
                         margin: 0 auto;
                         .box-title{
                             position: relative;
                             left: 0;
-                            margin-bottom: 6px;
+                            margin-bottom: 12px;
                         }
                         .fire{
                            width: 20px;
@@ -800,12 +823,9 @@
                         }
                     }
                 }
-
-
-
             }
 
-            .center-block {
+            /*.center-block {
                 width: calc(100% - 2711.5px);
                 text-align: center;
                 position: relative;
@@ -873,162 +893,249 @@
                         }
                     }
                 }
-            }
+            }*/
 
             .right-block {
-                width: 1358px;
-                .top-bar {
-                    width: 65%;
-                    height: 84px;
-
-                    .top-tab {
-                        width: 33.33%;
-                        height: 100%;
-                        cursor: pointer;
-                        float: left;
-                        background-image: url("./assets/right-top-tab2@2x.png");
-                        background-size: 100% 100%;
-                        background-image: -webkit-image-set(
-                                        url("./assets/right-top-tab2.png") 1x,
-                                        url("./assets/right-top-tab2@2x.png") 2x);
-                        text-align: center;
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
-                        justify-content: center;
-
-                        > p:first-child {
-                            font-size: 25px;
-                            font-weight: bold;
+                /*width: 1358px;*/
+                height: 100%;
+                margin: auto;
+                position: relative;
+                .top-content{
+                    height: 43.5%;
+                    width: 2293.5px;
+                    position: relative;
+                    .map-info{
+                        width: 635.5px;
+                        top: 80px;
+                        left: 23px;
+                        height: auto;
+                        position: absolute;
+                        z-index: 2;
+                        .map-title{
+                            font-size:45px;
+                            font-weight:bold;
+                            margin-bottom: 34px;
+                            background:linear-gradient(0deg,rgba(0,174,255,1) 0%, rgba(0,255,210,1) 100%);
+                            -webkit-background-clip:text;
+                            -webkit-text-fill-color:transparent;
                         }
-
-                        > p:last-child {
-                            font-size: 17px;
-                        }
-
-                        p {
-                            color: #0066FF;
-                        }
-
-                        &:nth-child(2) {
-                            transform: translate(-20%);
-                        }
-
-                        &:nth-child(3) {
-                            transform: translate(-40%);
-                        }
-
-                        &.selected {
-                            background-image: url("./assets/right-top-tab@2x.png");
+                        .map-box{
+                            height: 465.5px;
+                            width: 100%;
+                            padding: 30px;
+                            background-image: url("./assets/map-box@2x.png");
                             background-size: 100% 100%;
                             background-image: -webkit-image-set(
-                                            url("./assets/right-top-tab.png") 1x,
-                                            url("./assets/right-top-tab@2x.png") 2x);
-
-                            p {
-                                background: linear-gradient(0deg, rgba(0, 174, 255, 1) 0%, rgba(0, 255, 210, 1) 100%);
-                                -webkit-background-clip: text;
-                                -webkit-text-fill-color: transparent;
-                            }
-                        }
-                    }
-                }
-
-                .right-content {
-                    width: calc(100% - 33px);
-                    height: calc(100% - 116.5px);
-                    float: left;
-                    display: flex;
-                    background-image: url("./assets/right-block@2x.png");
-                    background-size: 100% 100%;
-                    background-image: -webkit-image-set(
-                                    url("./assets/right-block.png") 1x,
-                                    url("./assets/right-block@2x.png") 2x);
-                    .right-table{
-                        width: 710px;
-                        margin-top: 50px;
-                        margin-left: 37.5px;
-                        table{
-                            tr:not(:first-child){
-                                cursor: pointer;
-                            }
-                            tr.selected{
-                                background:linear-gradient(90deg,rgba(32,26,143,1),rgba(4,7,62,1));
-                            }
-                            td{
-                                height: 70.5px;
-                                > .public-num{
-                                    display: flex;
-                                    align-items: center;
-                                    > span:first-child{
-                                        font-size: 20px;
-                                        color:#008AFF;
-                                        width: 20px;
-                                        &.color0{
-                                            color:#FFC000
-                                        }
-                                        &.color1{
-                                            color:#FF0072
-                                        }
-                                        &.color2{
-                                            color:#00E0FF
-                                        }
-                                    }
-                                    > img{
-                                        width: 40px;
-                                        height: 40px;
-                                        border-radius: 100%;
-                                        margin: 0 10px;
-                                    }
-                                    > p{
-                                        display: flex;
-                                        flex-direction: column;
+                                            url("./assets/map-box.png") 1x,
+                                            url("./assets/map-box@2x.png") 2x);
+                            >div {
+                                &:first-child{
+                                    border-bottom: 1px solid #041EBB;
+                                    height: 125.5px;
+                                    p{
+                                        line-height: 50px;
                                         span:first-child{
-                                            font-weight:bold;
-                                            font-size:15px;
+                                            color:#E7E7E7;
+                                            font-size: 30px;
                                         }
                                         span:last-child{
-                                            font-weight:400;
-                                            font-size: 12px;
+                                            font-size: 35px;
+                                            font-weight: bold;
+                                            &.red{
+                                                color:#FF0072
+                                            }
+                                            &.yellow{
+                                                color:#FFDE00
+                                            }
                                         }
                                     }
                                 }
-                                > .index{
-                                    display: flex;
-                                    align-items: center;
-                                    > span:first-child{
-                                        width: 60px;
-                                        height: 30px;
-                                        line-height: 30px;
-                                        text-align: center;
-                                        background-color: #092DD6;
-                                        margin-right: 6px;
-                                    }
-                                    > span:last-child{
-                                        color: #FFC000;
-                                        font-weight:bold;
-                                    }
+                                &:last-child{
+                                    padding-top: 20px;
+                                  p{
+                                      line-height: 40px;
+                                      color:#E7E7E7;
+                                      font-size: 30px;
+                                      i{
+                                          font-size: 35px;
+                                          font-weight: bold;
+                                          color:#FFDE00;
+                                      }
+                                  }
+                                }
+                            }
+                        }
+
+                    }
+                }
+                .bottom-content{
+                    height: 56.5%;
+                    width: 2293.5px;
+                    padding-bottom: 60px;
+                    .top-bar {
+                        height: 114px;
+                        .top-tab {
+                            width: 424px;
+                            height: 100%;
+                            cursor: pointer;
+                            float: left;
+                            background-image: url("./assets/right-top-tab2@2x.png");
+                            background-size: 100% 100%;
+                            background-image: -webkit-image-set(
+                                            url("./assets/right-top-tab2.png") 1x,
+                                            url("./assets/right-top-tab2@2x.png") 2x);
+                            text-align: center;
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            justify-content: center;
+
+                            > p:first-child {
+                                font-size: 40px;
+                                font-weight: bold;
+                            }
+
+                            > p:last-child {
+                                font-size: 25px;
+                            }
+
+                            p {
+                                color: #0066FF;
+                            }
+
+                            &:nth-child(2) {
+                                transform: translate(-20%);
+                            }
+
+                            &:nth-child(3) {
+                                transform: translate(-40%);
+                            }
+
+                            &.selected {
+                                background-image: url("./assets/right-top-tab@2x.png");
+                                background-size: 100% 100%;
+                                background-image: -webkit-image-set(
+                                                url("./assets/right-top-tab.png") 1x,
+                                                url("./assets/right-top-tab@2x.png") 2x);
+
+                                p {
+                                    background: linear-gradient(0deg, rgba(0, 174, 255, 1) 0%, rgba(0, 255, 210, 1) 100%);
+                                    -webkit-background-clip: text;
+                                    -webkit-text-fill-color: transparent;
                                 }
                             }
                         }
                     }
-                    .right-chart{
-                        margin-top: 50px;
-                        width: calc(100% - 747.5px);
-                        .content-box{
-                            margin-left: 46px;
-                            margin-top: 10px;
-                            height: 44%;
-                            .box-title{
-                                top: 0;
+                    .content {
+                        width: 100%;
+                        height: calc(100% - 114px);
+                        float: left;
+                        display: flex;
+                        background-image: url("./assets/right-block@2x.png");
+                        background-size: 100% 100%;
+                        background-image: -webkit-image-set(
+                                        url("./assets/right-block.png") 1x,
+                                        url("./assets/right-block@2x.png") 2x);
+                        .right-table{
+                            width: 1300px;
+                            margin-top: 48px;
+                            margin-left: 54px;
+                            table{
+                                tr:not(:first-child){
+                                    cursor: pointer;
+                                }
+                                tr.selected{
+                                    background:linear-gradient(90deg,rgba(32,26,143,1),rgba(4,7,62,1));
+                                }
+                                td{
+                                    height: 100px;
+                                    > .public-num{
+                                        display: flex;
+                                        align-items: center;
+                                        padding-left: 20px;
+                                        > span:first-child{
+                                            font-size: 30px;
+                                            color:#008AFF;
+                                            width: 20px;
+                                            &.color0{
+                                                color:#FFC000
+                                            }
+                                            &.color1{
+                                                color:#FF0072
+                                            }
+                                            &.color2{
+                                                color:#00E0FF
+                                            }
+                                        }
+                                        > img{
+                                            width: 60px;
+                                            height: 60px;
+                                            border-radius: 100%;
+                                            margin: 0 10px;
+                                            flex-shrink: 0;
+                                        }
+                                        > p{
+                                            display: flex;
+                                            flex-direction: column;
+                                            span:first-child{
+                                                font-weight:bold;
+                                                font-size:20px;
+                                            }
+                                            span:last-child{
+                                                font-weight:400;
+                                                font-size: 17px;
+                                            }
+                                        }
+                                    }
+                                    > .index{
+                                        display: flex;
+                                        align-items: center;
+                                        > span:first-child{
+                                            width: 80px;
+                                            height: 40px;
+                                            line-height: 40px;
+                                            text-align: center;
+                                            background-color: #092DD6;
+                                            margin-right: 6px;
+                                            font-size: 25px;
+                                        }
+                                        > span:last-child{
+                                            color: #FFC000;
+                                            font-weight:bold;
+                                            font-size: 25px;
+                                        }
+                                    }
+                                }
                             }
-                            #rightTopChartLine,#rightBottomChartLine{
-                                width: 100%;
-                                height: 90%;
-                                margin-top: 3%;
+                        }
+                        .right-chart{
+                            margin-top: 50px;
+                            width: calc(100% - 1300px);
+                            .content-box{
+                                margin-left: 46px;
+                                margin-top: 10px;
+                                height: 47%;
+                                .box-title{
+                                    top: -20px;
+                                }
+                                #rightTopChartLine,#rightBottomChartLine{
+                                    width: 100%;
+                                    height: 90%;
+                                    margin-top: 3%;
+                                }
                             }
                         }
                     }
+
+                }
+                .earth-bg {
+                    animation: earthRotete 20s linear infinite;
+                    display: block;
+                    width: 905px;
+                    position: absolute;
+                    left: 1009px;
+                    top: 12px;
+                    z-index: 0;
                 }
             }
             .content-box{
@@ -1038,7 +1145,7 @@
                     background:linear-gradient(0deg,rgba(0,174,255,1) 0%, rgba(0,228,255,1) 100%);
                     -webkit-background-clip:text;
                     -webkit-text-fill-color:transparent;
-                    font-size:20px;
+                    font-size:35px;
                     font-weight:bold;
                     top: 6%;
                     left: 0;
@@ -1070,19 +1177,22 @@
                     th{
                         background-color: #033fff4d;
                         color:#2CB6FE;
-                        font-size: 14px;
-                        height: 35px;
+                        font-size: 24px;
+                        height: 55px;
                         text-align: center;
                     }
                     td{
                         color:#E7E7E7;
-                        font-size:14px;
-                        padding: 13px;
+                        font-size:24px;
+                        height: 74.5px;
+                        // padding: 4px;
                         text-align: center;
                         &:first-child{
                             text-align: left;
                             font-weight: bold;
                             cursor: pointer;
+                            display: flex;
+                            align-items: center;
                         }
                     }
                 }
@@ -1092,6 +1202,11 @@
                     table{
                         position: absolute;
                         top: 0;
+                        tr:not(:last-child){
+                            td{
+                                border-bottom: 1.5px solid #041877;
+                            }
+                        }
                     }
                 }
             }
@@ -1153,10 +1268,10 @@
 
     @keyframes earthRotete {
         0% {
-            transform: translate(-50%, -40%) rotate(0deg);
+            transform: rotate(0deg);
         }
         100% {
-            transform: translate(-50%, -40%) rotate(360deg);
+            transform: rotate(360deg);
         }
     }
 </style>

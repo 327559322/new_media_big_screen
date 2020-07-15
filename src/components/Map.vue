@@ -35,15 +35,15 @@
                 mapObj:{}, // 地图实例
                 currentArea: '福州市', // 当前选中的城市
                 popWinPosMap: { // 弹出窗位置设置
-                    '福州市': [791, 222],
-                    '厦门市': [367, 274],
-                    '泉州市': [481, 237],
-                    '漳州市': [255, 205],
-                    '龙岩市': [380, 80],
-                    '三明市': [610, 47],
-                    '南平市': [755, 41],
-                    '莆田市': [648, 251],
-                    '宁德市': [924, 155]
+                    '福州市': [1721, 462],
+                    '厦门市': [1003, 504],
+                    '泉州市': [1258, 491],
+                    '漳州市': [920, 448],
+                    '龙岩市': [1080, 225],
+                    '三明市': [1460, 215],
+                    '南平市': [1680, 205],
+                    '莆田市': [1488, 500],
+                    '宁德市': [1961, 355]
                 },
                 cityList: ['福州市', '厦门市', '泉州市', '漳州市', '龙岩市', '三明市', '南平市', '莆田市', '宁德市'], // 城市列表
                 currentCityIndex:1, // 当前选中的城市序号
@@ -122,7 +122,7 @@
                         distance: 68,//默认视角距离主体的距离
                         alpha: 50, // 让canvas在x轴有一定的倾斜角度
                         beta: 50,
-                        center: [0, 0, 10],
+                        center: [0, 10, 10],
                         animation: true,
                         rotateSensitivity: 0, // 禁止转动
                         maxDistance: 70, //最大的值 （默认400）
@@ -305,7 +305,7 @@
                         }, 2000)
                     }
                 }
-            },50)
+            },10)
         }
     }
 </script>
@@ -313,11 +313,12 @@
 <style scoped lang="scss">
     .map-area {
         position: relative;
-
+        z-index: 1;
         #map {
-            width: 1087px;
-            height: 458px;
-            margin: 50px auto auto auto;
+            width: 1861px;
+            height: 788px;
+            float: right;
+            /*margin: 50px auto auto auto;*/
         }
 
         .pop-little-win {
@@ -349,6 +350,7 @@
             width: 215.5px;
             height: 329px;
             display: none;
+            text-align: center;
             position: absolute;
             z-index: 2;
             background-image: url("../assets/map-big-pop-win@2x.png");
